@@ -74,9 +74,13 @@ function App() {
   const [isLight, setIsLight] = useState(true);
 
   const handleThemeMode = () => {
-    setTimeout(() => {
+    clearTimeout(intervalId);
+    const intervalId = null;
+    intervalId = setTimeout(() => {
       setIsLight(!isLight);
     }, 200);
+
+    return () => clearTimeout(intervalId);
   };
   return (
     <Router>
