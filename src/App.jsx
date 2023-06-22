@@ -7,6 +7,7 @@ import data from "./data/data.json";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import CountryDetails from "./Components/CountryDetails";
+import ScrollToTopButton from "./Components/ScrollToTopButton";
 
 const Home = ({ isLight }) => {
   const [countries, setCountries] = useState(data);
@@ -72,6 +73,42 @@ const Home = ({ isLight }) => {
 
 function App() {
   const [isLight, setIsLight] = useState(true);
+  const [visible, setVisible] = useState(true);
+  const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
+  const [scrollTopPos, setScrollTopPos] = useState(window.pageYOffset);
+  const [isScrollTopVisible, setIsScrollTopVisible] = useState(false);
+
+  const handleIsScrollTop = () => {
+    const current = window.pageYOffset;
+    if (current > 400) {
+      setIsScrollTopVisible(true);
+      setScrollTopPos(current);
+    } else {
+      setIsScrollTopVisible(false);
+      setScrollTopPos(current);
+    }
+
+    console.log(isScrollTopVisible);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleIsScrollTop);
+
+    return () => removeEventListener("scroll", handleIsScrollTop);
+  }, [scrollTopPos]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [prevScrollPos]);
+
+  const handleScroll = () => {
+    const currentScrollPos = window.pageYOffset;
+    const visible = currentScrollPos < prevScrollPos;
+    setPrevScrollPos(currentScrollPos);
+    setVisible(visible);
+  };
 
   let timeout = null;
 
@@ -88,11 +125,17 @@ function App() {
   return (
     <Router>
       <div className={`app ${isLight ? "light-mode" : "dark-mode"}`}>
-        <Navbar isLight={isLight} handleThemeMode={handleThemeMode} />
+        <Navbar
+          visible={visible}
+          setVisible={setVisible}
+          isLight={isLight}
+          handleThemeMode={handleThemeMode}
+        />
         <Routes>
           <Route path="/" exact element={<Home isLight={isLight} />} />
           <Route path="/country-details/:id" element={<CountryDetails />} />
         </Routes>
+        <ScrollToTopButton isScrollTopVisible={isScrollTopVisible} />
       </div>
     </Router>
   );

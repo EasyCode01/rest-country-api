@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-const Navbar = ({ handleThemeMode, isLight }) => {
+const Navbar = ({ handleThemeMode, isLight, setVisible, visible }) => {
   const navTitle = "Where in the Word?";
   return (
-    <div className={`navbar ${isLight ? "light-mode" : "dark-mode"}`}>
+    <nav
+      className={`${visible ? "navbar--visible" : "navbar"} ${
+        isLight ? "light-mode" : "dark-mode"
+      }`}
+    >
       <div className="navbar__content container">
         <h3 className="navbar__logo">{navTitle}</h3>
         <div className="navbar__mode">
@@ -18,7 +22,7 @@ const Navbar = ({ handleThemeMode, isLight }) => {
           )}
         </div>
       </div>
-    </div>
+    </nav>
   );
 };
 
