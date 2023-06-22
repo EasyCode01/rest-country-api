@@ -74,11 +74,10 @@ function App() {
   const [isLight, setIsLight] = useState(true);
 
   const handleThemeMode = () => {
-    clearTimeout(intervalId);
-    const intervalId = null;
+    let intervalId = null;
     intervalId = setTimeout(() => {
       setIsLight(!isLight);
-    }, 200);
+    }, 100);
 
     return () => clearTimeout(intervalId);
   };
