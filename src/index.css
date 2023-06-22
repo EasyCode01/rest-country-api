@@ -202,6 +202,7 @@ a {
   grid-template-columns: repeat(2, 0.7fr);
   justify-content: space-between;
   align-items: center;
+  border: 1px solid red;
 }
 
 .country__flag__info img {
@@ -230,7 +231,7 @@ a {
 @media (max-width: 715px) {
   .country__flag__info {
     grid-template-columns: repeat(1, 1fr);
-    justify-items: center;
+
     padding-bottom: 30px;
   }
 }

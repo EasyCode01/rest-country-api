@@ -73,14 +73,18 @@ const Home = ({ isLight }) => {
 function App() {
   const [isLight, setIsLight] = useState(true);
 
+  let timeout = null;
+
   const handleThemeMode = () => {
-    let intervalId = null;
-    intervalId = setTimeout(() => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
       setIsLight(!isLight);
     }, 100);
-
-    return () => clearTimeout(intervalId);
   };
+
+  useEffect(() => {
+    return () => clearTimeout(timeout);
+  }, []);
   return (
     <Router>
       <div className={`app ${isLight ? "light-mode" : "dark-mode"}`}>
