@@ -202,7 +202,6 @@ a {
   grid-template-columns: repeat(2, 0.7fr);
   justify-content: space-between;
   align-items: center;
-  border: 1px solid red;
 }
 
 .country__flag__info img {
